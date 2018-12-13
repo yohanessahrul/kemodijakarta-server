@@ -1,11 +1,16 @@
+const UserModel = require('../models/m_user');
+const jwt = require('jsonwebtoken');
+
 module.exports = {
   cekToken: function (req, res, next) {
-    if (req.headers.token === 'haha') {
+    const token = req.headers.token;
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decodeResult) {
+      if (err) {
+        console.log(err)
+        return console.log('--> Middleware catch you, your token invalid')
+      }
+      console.log('Middleware oke')
       return next();
-    }
-    res.status(200).json({
-      httpStatus: 401,
-      desc: 'Unauthorized !'
-    });
+    })
   }
 }
