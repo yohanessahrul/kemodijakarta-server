@@ -17,6 +17,20 @@ module.exports = {
       });
     });
   },
+  getUserById: function (req, res) {
+    User.findOne({
+      _id: req.params.id
+    }, function (err, response) {
+      if (err) {
+        return console.log(err)
+      }
+      console.log(`--> Get user by id ${req.params.id}`)
+      res.status(200).json({
+        msg: `Get user by id ${req.params.id}`,
+        data: response 
+      })
+    })
+  },
   registerUser: function (req, res) {
     const { username, email, password } = req.body;
     User.findOne({
@@ -75,9 +89,19 @@ module.exports = {
     });
   },
   changeProfileUser: function (req, res) {
-    res.status(200).json({
-      msg: 'Change profile user success 111',
-      desc: 'API sudah jalan'
+    User.findByIdAndUpdate({
+      _id: req.params.id
+    }, {
+      role: req.body.role
+    }, function (err, response) {
+      if (err) {
+        return console.log(err)
+      }
+      console.log('Change role profile success');
+      res.status(200).json({
+        msg: 'Change role profile success',
+        data: response
+      });
     });
   },
   deleteUser: function (req, res) {

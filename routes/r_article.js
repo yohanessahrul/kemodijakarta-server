@@ -13,8 +13,9 @@ Router.get('/', (req, res) => {
 });
 
 Router.get('/getallarticles', middleware.cekToken, ControllerArticle.getAllArticles);
+Router.get('/getarticlebyid/:id', middleware.cekToken, ControllerArticle.getArticleById);
 Router.post('/createarticle', middleware.cekToken, ControllerArticle.createArticle);
-Router.put('/changeimagearticle/:id/:idimage', middleware.cekToken, ControllerArticle.changeImageArticle);
+Router.put('/changeimagearticle/:id', middleware.cekToken, ControllerArticle.changeImageArticle);
 Router.put('/changearticle/:id', middleware.cekToken, ControllerArticle.changeArticle);
 Router.delete('/deletearticle/:id', middleware.cekToken, ControllerArticle.deleteArticle);
 

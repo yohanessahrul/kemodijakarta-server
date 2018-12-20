@@ -10,6 +10,7 @@ Router.get('/', (req, res) => {
 });
 
 Router.get('/getallusers', middleware.cekToken, ControllerUser.getAllUsers);
+Router.get('/getuserbyid/:id', middleware.cekToken, ControllerUser.getUserById);
 Router.post('/registeruser', middleware.cekToken, ControllerUser.registerUser);
 Router.put('/resetpassword/:id', middleware.cekToken, ControllerUser.resetPassword);
 Router.put('/changeprofileuser/:id', middleware.cekToken, ControllerUser.changeProfileUser);

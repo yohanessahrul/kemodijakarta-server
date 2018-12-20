@@ -11,11 +11,16 @@ module.exports = {
       if (err) {
         return console.log(err)
       }
-      console.log('--> Upload new image success');
-      res.status(200).json({
-        msg: 'Upload new image success',
-        data: response
-      });
+      Gallery.find({}, function (err1, response1) {
+        if (err1) {
+          return console.log(err1)
+        }
+        console.log('--> Upload new image success');
+        res.status(200).json({
+          msg: 'Upload new image success',
+          data: response1
+        });
+      })
     });
   },
 

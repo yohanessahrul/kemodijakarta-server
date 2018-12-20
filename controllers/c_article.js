@@ -1,5 +1,4 @@
 const Article = require('../models/m_article');
-const Gallery = require('../models/m_gallery');
 
 module.exports = {
   
@@ -22,7 +21,8 @@ module.exports = {
       judul: judul,
       isi: isi,
       img: img,
-      createdDate: new Date()
+      createdDate: new Date(),
+      view: 0
     }, function (err, response) {
       if (err) {
         return console.log(err);
@@ -36,26 +36,27 @@ module.exports = {
   },
 
   changeImageArticle: function (req, res) {
-    Gallery.findOne({
-      _id: req.params.idimage
+    console.log('REQ BODY ==> ', req.body.img)
+    Article.findByIdAndUpdate({
+      _id: req.params.id
+    }, {
+      img: req.body.img
     }, function (err, response) {
       if (err) {
         return console.log(err)
       }
-      Article.findOneAndUpdate({
-        _id: req.params.id
-      }, {
-        img: response.img
-      }, function (err2, response2) {
-        if (err2) {
-          return console.log(err2);
-        }
-        console.log('--> Image change success');
-        res.status(200).json({
-          msg: 'Image change success',
-          // data: response2
+      if (response) {
+        Article.find({}, function (err1, response1) {
+          if (err1) {
+            return console.log(err1)
+          }
+          console.log('--> Update image article success')
+          res.status(200).json({
+            msg: 'Update image article success',
+            data: response1
+          });
         });
-      });
+      }
     });
   },
 
@@ -104,6 +105,21 @@ module.exports = {
         });
       });
     });
+  },
+
+  getArticleById: function (req, res) {
+    Article.findById({
+      _id: req.params.id
+    }, function (err, response) {
+      if (err) {
+        return console.log(err)
+      }
+      console.log('--> Get article by id success')
+      res.status(200).json({
+        msg: 'Get article by id success',
+        data: response
+      })
+    })
   }
 
 }
