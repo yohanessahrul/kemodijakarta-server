@@ -16,5 +16,6 @@ Router.put('/resetpassword/:id', middleware.cekToken, ControllerUser.resetPasswo
 Router.put('/changeprofileuser/:id', middleware.cekToken, ControllerUser.changeProfileUser);
 Router.delete('/deleteuser/:id', middleware.cekToken, ControllerUser.deleteUser);
 Router.post('/login', ControllerUser.login);
+Router.get('/ceklogin/:token', ControllerUser.cekLogin);
 
 module.exports = Router;
