@@ -1,4 +1,4 @@
-const User = require('../models/m_user');
+                                               const User = require('../models/m_user');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
@@ -143,9 +143,26 @@ module.exports = {
         }, process.env.JWT_SECRET)
         res.status(200).json({
           msg: 'Login success',
-          token: payloadToken
+          token: payloadToken,
+          username: response.username,
+          role: response.role
         })
       }
+    })
+  },
+  cekLogin: function (req, res) {
+    console.log('Masuk server auth')
+    let token = req.params.token;
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decode) {
+      if (err) {
+        console.log('--> Token tidak valid')
+        res.status(200).json({
+          msg: 'unvalid'
+        })
+      }
+      res.status(200).json({
+        msg: 'valid'
+      })
     })
   }
 }
