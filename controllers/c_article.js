@@ -1,4 +1,10 @@
 const Article = require('../models/m_article');
+const moment = require('moment');
+// const { Translate } = require('@google-cloud/translate');
+// const projectId = process.env.GCLOUD_PROJECT;
+// const translate = new Translate({
+//   projectId: projectId
+// })
 
 module.exports = {
   
@@ -8,9 +14,26 @@ module.exports = {
         return console.log(err);
       }
       console.log('--> Get all articles success');
+      
+      let newData = []
+      for (let i = 0; i < response.length; i++) {
+        let newDate = moment(Date.now()).to(response[i].createdDate);
+        
+        let _id = response[i]._id
+        let judul = response[i].judul
+        let isi = response[i].isi
+        let img = response[i].img
+        let createdDate = 'Last updated ' + newDate
+        let view = response[i].view
+        let createdAt = response[i].createdAt
+        let updatedAt = response[i].updatedAt
+
+        let payload = { _id, judul, isi, img, createdDate, view, createdAt, updatedAt }
+        newData.push(payload)
+      }
       res.status(200).json({
         msg: 'Get all articles success',
-        data: response
+        data: newData
       });
     });
   },
