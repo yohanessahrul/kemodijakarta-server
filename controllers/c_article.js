@@ -14,7 +14,7 @@ module.exports = {
         return console.log(err);
       }
       console.log('--> Get all articles success');
-      
+
       let newData = []
       for (let i = 0; i < response.length; i++) {
         let newDate = moment(Date.now()).to(response[i].createdDate);
@@ -24,11 +24,12 @@ module.exports = {
         let isi = response[i].isi
         let img = response[i].img
         let createdDate = 'Last updated ' + newDate
+        let originCreatedDate = response[i].createdDate
         let view = response[i].view
         let createdAt = response[i].createdAt
         let updatedAt = response[i].updatedAt
 
-        let payload = { _id, judul, isi, img, createdDate, view, createdAt, updatedAt }
+        let payload = { _id, judul, isi, img, createdDate, originCreatedDate, view, createdAt, updatedAt }
         newData.push(payload)
       }
       res.status(200).json({
