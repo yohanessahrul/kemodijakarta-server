@@ -12,11 +12,13 @@ Router.get('/', (req, res) => {
   });
 });
 
-Router.get('/getallarticles', middleware.cekToken, ControllerArticle.getAllArticles);
-Router.get('/getarticlebyid/:id', middleware.cekToken, ControllerArticle.getArticleById);
+Router.get('/getallarticles', ControllerArticle.getAllArticles);
+Router.get('/getarticlebyid/:id', ControllerArticle.getArticleById);
 Router.post('/createarticle', middleware.cekToken, ControllerArticle.createArticle);
 Router.put('/changeimagearticle/:id', middleware.cekToken, ControllerArticle.changeImageArticle);
 Router.put('/changearticle/:id', middleware.cekToken, ControllerArticle.changeArticle);
 Router.delete('/deletearticle/:id', middleware.cekToken, ControllerArticle.deleteArticle);
+Router.get('/addview/:id', ControllerArticle.addViewer);
+Router.get('/newarticle/:id', ControllerArticle.newArticle);
 
 module.exports = Router;

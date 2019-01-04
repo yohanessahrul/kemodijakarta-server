@@ -9,7 +9,7 @@ const moment = require('moment');
 module.exports = {
   
   getAllArticles: function (req, res) {
-    Article.find({} , function (err, response) {
+    Article.find({}, null, {sort: '-createdAt'}, function (err, response) {
       if (err) {
         return console.log(err);
       }
@@ -142,6 +142,45 @@ module.exports = {
       res.status(200).json({
         msg: 'Get article by id success',
         data: response
+      })
+    })
+  },
+  addViewer: function (req, res) {
+    Article.findById({
+      _id: req.params.id
+    }, function (err, response) {
+      if (err) {
+        return console.log(err)
+      }
+      Article.findByIdAndUpdate({
+        _id: req.params.id
+      }, {
+        view: response.view + 1
+      }, function (err2, response2) {
+        if (err2) {
+          return console.log(err2)
+        }
+        res.status(200).json({
+          msg: 'Add viewer on view by id success',
+          data: response2
+        });
+      })
+    });
+  },
+  newArticle: function (req, res) {
+    Article.find({}, null, {sort: '-createdAt'}, function(err, response) {
+      if (err) {
+        return console.log(err);
+      }
+      let newArticle3 = [];
+      for (var i=0; i < response.length; i++) {
+        if (response[i]._id != req.params.id && newArticle3.length < 3) {
+          newArticle3.push(response[i])
+        }
+      }
+      res.status(200).json({
+        msg: 'Get 3 new articles success',
+        data: newArticle3
       })
     })
   }
